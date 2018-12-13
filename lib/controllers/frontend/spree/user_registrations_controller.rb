@@ -13,15 +13,8 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
   before_action :check_permissions, only: [:edit, :update]
   skip_before_action :require_no_authentication
 
-  # GET /resource/sign_up
-  def new
-    super
-    @user = resource
-  end
-
-  # POST /resource/sign_up
   def create
-    @user = build_resource(spree_user_params)
+    build_resource(spree_user_params)
     resource_saved = resource.save
     yield resource if block_given?
     if resource_saved
@@ -37,32 +30,10 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
       end
     else
       clean_up_passwords(resource)
-      render :new
+      respond_with(resource) do |format|
+        format.html { render :new }
+      end
     end
-  end
-
-  # GET /resource/edit
-  def edit
-    super
-  end
-
-  # PUT /resource
-  def update
-    super
-  end
-
-  # DELETE /resource
-  def destroy
-    super
-  end
-
-  # GET /resource/cancel
-  # Forces the session data which is usually expired after sign
-  # in to be expired now. This is useful if the user wants to
-  # cancel oauth signing in/up in the middle of the process,
-  # removing all OAuth session data.
-  def cancel
-    super
   end
 
   protected
@@ -78,6 +49,6 @@ class Spree::UserRegistrationsController < Devise::RegistrationsController
   private
 
   def spree_user_params
-    params.require(:spree_user).permit(Spree::PermittedAttributes.user_attributes)
+    params.require(:spree_user).permit(Spree::PermittedAttributes.user_attributes) | [:email])
   end
 end

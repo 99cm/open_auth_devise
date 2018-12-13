@@ -13,10 +13,12 @@ nbproject
 pkg
 *.sw?
 spec/dummy
+spec/examples.txt
 .rvmrc
 .sass-cache
 public/spree
 .ruby-version
 .ruby-gemset
+vendor
 gemfiles/*.gemfile.lock
 *.gem

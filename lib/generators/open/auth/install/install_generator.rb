@@ -1,4 +1,4 @@
-module Spree
+module Open
   module Auth
     module Generators
       class InstallGenerator < Rails::Generators::Base
@@ -15,12 +15,11 @@ module Spree
         end
 
         def generate_devise_key
-          return if ENV['CI']
-          template 'config/initializers/devise.rb', 'config/initializers/devise.rb'
+          template 'config/initializers/devise.rb', 'config/initializers/devise.rb', skip: true
         end
 
         def add_migrations
-          run 'bundle exec rake railties:install:migrations FROM=spree_auth'
+          run 'bundle exec rake railties:install:migrations FROM=open_auth'
         end
 
         def run_migrations

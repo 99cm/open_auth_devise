@@ -1,4 +1,4 @@
-class AddConfirmableToUsers < SpreeExtension::Migration[4.2]
+class AddConfirmableToUsers < ActiveRecord::Migration[5.2]
   def change
     add_column :spree_users, :confirmation_token, :string
     add_column :spree_users, :confirmed_at, :datetime

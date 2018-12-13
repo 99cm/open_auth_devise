@@ -19,13 +19,7 @@ RSpec.describe Spree::ProductsController, type: :controller do
   it 'cannot view non-active products' do
     allow(user).to receive(:has_spree_role?) { false }
 
-    # this behaviour was introduced in rails 5.1 & Spree 3.5
-    # https://github.com/spree/spree/commit/acf52960f5b9582cdfe01f0cb563766b44aabbd5
-    if Spree.version.to_f > 3.4
-      expect { request }.to raise_error(ActiveRecord::RecordNotFound)
-    else
-      request
-      expect(response.status).to eq(404)
-    end
+    request
+    expect(response.status).to eq(404)
   end
 end

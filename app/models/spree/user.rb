@@ -1,16 +1,19 @@
 module Spree
   class User < Spree::Base
-    include UserAddress
     include UserMethods
-    include UserPaymentSource
 
     devise :database_authenticatable, :registerable, :recoverable,
-           :rememberable, :trackable, :encryptable, encryptor: 'authlogic_sha512'
+           :rememberable, :trackable, :encryptable
     devise :confirmable if Spree::Auth::Config[:confirmable]
     devise :validatable if Spree::Auth::Config[:validatable]
 
     acts_as_paranoid
     after_destroy :scramble_email_and_password
+
+    def password=(new_password)
+      generate_spree_api_key if new_password.present? && spree_api_key.present?
+      super
+    end
 
     before_validation :set_login
 

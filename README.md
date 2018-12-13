@@ -1,49 +1,33 @@
-# Spree Auth (Devise)
+Open Auth (Devise)
+=====================
 
-[![Build Status](https://travis-ci.org/spree/spree_auth_devise.svg?branch=master)](https://travis-ci.org/spree/spree_auth_devise)
-[![Code Climate](https://codeclimate.com/github/spree/spree_auth_devise/badges/gpa.svg)](https://codeclimate.com/github/spree/spree_auth_devise)
+Provides authentication services for Open, using the Devise gem.
 
-Provides authentication services for Spree, using the Devise gem.
+Installation
+------------
 
-
-## Installation
-
-1. Add this extension to your Gemfile with this line:
-
-  #### Spree >= 3.1
+Just this extension to your Gemfile with this line:
 
   ```ruby
-  gem 'spree_auth_devise', '~> 3.3'
+  gem 'open_auth_devise', github: '99cm/open_auth_devise', branch: 'master'
   ```
 
-  #### Spree 3.0 and Spree 2.x
-
-  ```ruby
-  gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: 'X-X-stable'
-  ```
-
-  The `branch` option is important: it must match the version of Spree you're using.
-  For example, use `3-0-stable` if you're using Spree `3-0-stable` or any `3.0.x` version.
-
-2. Install the gem using Bundler:
+Then install the gem using Bundler:
   ```ruby
   bundle install
   ```
 
-3. Copy & run migrations
-  ```ruby
-  bundle exec rails g spree:auth:install
-  ```
+After that's done, you can install and run the necessary migrations, then seed the database:
 
-## Upgrading from Spree 3.0 to 3.1
-
-If you're upgrading from 3.0 to 3.1 you need to rerun the installer to copy new asset files (javascripts)
-
-```ruby
-bundle exec rails g spree:auth:install
+```shell
+bundle exec rake open_auth:install:migrations
+bundle exec rake db:migrate
+bundle exec rake db:seed
 ```
 
-## Configuration
+### Default Username/Password
+
+As part of running the above installation steps, you will be asked to set an admin email/password combination. The default values are `admin@example.com` and 'test123', respectively.
 
 ### Confirmable
 
@@ -63,7 +47,7 @@ Devise.setup do |config|
   # Fixes the bug where Confirmation errors result in a broken page.
   config.router_name = :spree
 
-  # Add any other devise configurations here, as they will override the defaults provided by spree_auth_devise.
+  # Add any other devise configurations here, as they will override the defaults provided by open_auth_devise.
 end
 ```
 
@@ -77,52 +61,35 @@ Spree::Auth::Config[:signout_after_password_change] = false
 
 ## Using in an existing Rails application
 
-If you are installing Spree inside of a host application in which you want your own permission setup, you can do this using spree_auth_devise's register_ability method.
+If you are installing Open inside of a host application in which you want your own permission setup, you can do this using open_auth_devise's register_ability method.
 
 First create your own CanCan Ability class following the CanCan documentation.
 
-For example: app/models/your_ability_class.rb
+For example: app/models/super_ability.rb
 
 ```ruby
-class YourAbilityClass
+class SuperAbility
   include CanCan::Ability
 
   def initialize user
-    # direct permissions
-     can :create, SomeRailsObject
-
-     # or permissions by group
-     if spree_user.has_spree_role? "admin"
-       can :create, SomeRailsAdminObject
-     end
-   end
+    if user.is? "Superman"
+      can :stop, Bullet
+    end
+  end
 end
 ```
 
 Then register your class in your spree initializer: config/initializers/spree.rb
 ```ruby
-Spree::Ability.register_ability(YourAbilityClass)
+Spree::Ability.register_ability(SuperAbilities)
 ```
 
 Inside of your host application you can then use CanCan like you normally would.
-```ruby
-<% if can? :show, SomeRailsObject %>
-
+```erb
+<% if can? :stop, Bullet %>
+  ...
 <% end %>
 ```
-
-### Adding Permissions to Gems
-
-This methodology can also be used by gems that extend spree and want/need to add permissions.
-
-### Ruby 2.5 issues
-
-If you encounter issues when using Ruby 2.5, please run:
-
-```
-bundle update devise
-```
-
 ## Testing
 
 You need to do a quick one-time creation of a test application and then you can use it to run the tests.

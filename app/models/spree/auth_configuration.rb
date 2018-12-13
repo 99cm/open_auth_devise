@@ -4,5 +4,7 @@ module Spree
     preference :signout_after_password_change, :boolean, default: true
     preference :confirmable, :boolean, default: false
     preference :validatable, :boolean, default: true
+    preference :draw_frontend_routes, :boolean, default: true
+    preference :draw_backend_routes, :boolean, default: true
   end
 end

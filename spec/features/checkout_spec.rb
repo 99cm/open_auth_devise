@@ -11,6 +11,7 @@ RSpec.feature 'Checkout', :js, type: :feature do
 
   given!(:zone)    { create(:zone) }
   given!(:address) { create(:address, state: state, country: country) }
+  given!(:payment_method){ create :check_payment_method }
 
   background do
     @product = create(:product, name: 'RoR Mug')
@@ -22,15 +23,28 @@ RSpec.feature 'Checkout', :js, type: :feature do
     visit spree.root_path
   end
 
-  context 'without payment being required' do
-    background do
-      # So that we don't have to setup payment methods just for the sake of it
-      allow_any_instance_of(Spree::Order).to receive(:has_available_payment).and_return(true)
-      allow_any_instance_of(Spree::Order).to receive(:payment_required?).and_return(false)
-    end
+  # Regression test for https://github.com/solidusio/solidus/issues/1588
+  scenario 'leaving and returning to address step' do
+    Spree::Auth::Config.set(registration_step: true)
+    click_link 'RoR Mug'
+    click_button 'Add To Cart'
+    within('h1') { expect(page).to have_text 'Shopping Cart' }
+    click_button 'Checkout'
 
+    within '#guest_checkout' do
+      fill_in 'Email', with: 'test@example.com'
+    end
+    click_on 'Continue'
+
+    click_on 'Cart'
+
+    click_on 'Checkout'
+
+    expect(page).to have_content "Billing Address"
+  end
+
+  context 'without payment being required' do
     scenario 'allow a visitor to checkout as guest, without registration' do
-      Spree::Auth::Config.set(registration_step: true)
       click_link 'RoR Mug'
       click_button 'Add To Cart'
       within('h1') { expect(page).to have_text 'Shopping Cart' }
@@ -54,6 +68,8 @@ RSpec.feature 'Checkout', :js, type: :feature do
 
       click_button 'Save and Continue'
       click_button 'Save and Continue'
+      click_button 'Save and Continue'
+      click_button 'Place Order'
 
       expect(page).to have_text 'Your order has been processed successfully'
     end
@@ -84,6 +100,8 @@ RSpec.feature 'Checkout', :js, type: :feature do
 
       click_button 'Save and Continue'
       click_button 'Save and Continue'
+      click_button 'Save and Continue'
+      click_button 'Place Order'
 
       expect(page).to have_text 'Your order has been processed successfully'
       expect(Spree::Order.first.user).to eq user
@@ -91,7 +109,6 @@ RSpec.feature 'Checkout', :js, type: :feature do
 
     # Regression test for #890
     scenario 'associate an incomplete guest order with user after successful password reset' do
-      create(:store)
       user = create(:user, email: 'email@person.com', password: 'password', password_confirmation: 'password')
       click_link 'RoR Mug'
       click_button 'Add To Cart'
@@ -104,7 +121,7 @@ RSpec.feature 'Checkout', :js, type: :feature do
       # Need to do this now because the token stored in the DB is the encrypted version
       # The 'plain-text' version is sent in the email and there's one way to get that!
       reset_password_email = ActionMailer::Base.deliveries.first
-      token_url_regex = /^http:\/\/www.example.com\/user\/spree_user\/password\/edit\?reset_password_token=(.*)$/
+      token_url_regex = /\/user\/spree_user\/password\/edit\?reset_password_token=(.*)$/
       token = token_url_regex.match(reset_password_email.body.to_s)[1]
 
       visit spree.edit_spree_user_password_path(reset_password_token: token)
@@ -135,6 +152,8 @@ RSpec.feature 'Checkout', :js, type: :feature do
 
       expect(page).to have_text 'Registration'
 
+      click_link 'Create a new account'
+
       fill_in 'Email', with: 'email@person.com'
       fill_in 'Password', with: 'spree123'
       fill_in 'Password Confirmation', with: 'spree123'
@@ -152,6 +171,8 @@ RSpec.feature 'Checkout', :js, type: :feature do
 
       click_button 'Save and Continue'
       click_button 'Save and Continue'
+      click_button 'Save and Continue'
+      click_button 'Place Order'
 
       expect(page).to have_text 'Your order has been processed successfully'
       expect(Spree::Order.first.user).to eq Spree::User.find_by_email('email@person.com')

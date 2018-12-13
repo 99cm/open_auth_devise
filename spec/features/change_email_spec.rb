@@ -2,6 +2,8 @@ RSpec.feature 'Change email', type: :feature do
   background do
     allow_bypass_sign_in
 
+    Spree::Auth::Config.set(signout_after_password_change: false)
+
     user = create(:user, email: 'old@spree.com', password: 'secret')
     visit spree.root_path
     click_link 'Login'

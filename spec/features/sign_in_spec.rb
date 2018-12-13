@@ -37,9 +37,7 @@ RSpec.feature 'Sign In', type: :feature do
     fill_in 'Password', with: user.password
     click_button 'Login'
 
-    within '.user-menu' do
-      expect(page).to have_text 'admin@person.com'
-    end
+    expect(page).to have_text 'admin@person.com'
     expect(current_path).to eq '/admin/orders'
   end
 
