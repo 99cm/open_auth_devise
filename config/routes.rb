@@ -4,18 +4,23 @@ Spree::Core::Engine.routes.draw do
     Spree::Auth::Config.draw_frontend_routes
   )
 
-    devise_for(:spree_user, {
+    devise_user_config = { 
       class_name: 'Spree::User',
-      controllers: {
-        sessions: 'spree/user_sessions',
-        registrations: 'spree/user_registrations',
-        passwords: 'spree/user_passwords',
-        confirmations: 'spree/user_confirmations'
-      },
+      controllers: { sessions: 'spree/user_sessions',
+                     registrations: 'spree/user_registrations',
+                     passwords: 'spree/user_passwords',
+                     confirmations: 'spree/user_confirmations' }
       skip: [:unlocks, :omniauth_callbacks],
       path_names: { sign_out: 'logout' },
-      path_prefix: :user
-    })
+      path: 'user' 
+    }
+
+    if Spree::Auth::Config[:omniauthable]
+      devise_user_config[:controllers] = devise_user_config[:controllers].merge(omniauth_callbacks: 'spree/omniauth_callbacks')
+      devise_user_config[:skip] = [:unlocks]
+    end
+
+    devise_for :spree_user, devise_user_config
 
     resources :users, only: [:edit, :update]
 
@@ -30,6 +35,8 @@ Spree::Core::Engine.routes.draw do
       get '/password/change', to: 'user_passwords#edit', as: :edit_password
       put '/password/change', to: 'user_passwords#update', as: :update_password
       get '/confirm', to: 'user_confirmations#show', as: :confirmation if Spree::Auth::Config[:confirmable]
+
+      post '/users/sign_up_social', to: 'user_registrations#create_social', as: 'social_user_registration' 
     end
 
     get '/checkout/registration', to: 'checkout#registration', as: :checkout_registration

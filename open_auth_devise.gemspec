@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'open_auth_devise'
   s.version     = '2.5.0'
-  s.summary     = 'Provides authentication and authorization services for use with Spree by using Devise and CanCan.'
+  s.summary     = 'Provides authentication and authorization services for Open store with Devise and CanCan.'
   s.description = s.summary
 
   s.required_ruby_version = '>= 2.5.1'
@@ -40,5 +40,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'open_backend', open_version
   s.add_development_dependency 'open_frontend', open_version
   s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'appraisal'
 end

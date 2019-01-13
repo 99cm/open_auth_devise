@@ -1,12 +1,12 @@
 Open Auth (Devise)
 =====================
 
-Provides authentication services for Open, using the Devise gem.
+Provides authentication services for Open, using the Devise gem, in addition, supports to configure omniauthable.
 
 Installation
 ------------
 
-Just this extension to your Gemfile with this line:
+Just add this extension to your Gemfile with this line:
 
   ```ruby
   gem 'open_auth_devise', github: '99cm/open_auth_devise', branch: 'master'

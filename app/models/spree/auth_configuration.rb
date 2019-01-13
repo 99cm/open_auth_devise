@@ -6,5 +6,6 @@ module Spree
     preference :validatable, :boolean, default: true
     preference :draw_frontend_routes, :boolean, default: true
     preference :draw_backend_routes, :boolean, default: true
+    preference :omniauthable, :boolean, default: false
   end
 end

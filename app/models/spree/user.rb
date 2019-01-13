@@ -6,6 +6,7 @@ module Spree
            :rememberable, :trackable, :encryptable
     devise :confirmable if Spree::Auth::Config[:confirmable]
     devise :validatable if Spree::Auth::Config[:validatable]
+    devise :omniauthable if Spree::Auth::Config[:omniauthable]
 
     acts_as_paranoid
     after_destroy :scramble_email_and_password
