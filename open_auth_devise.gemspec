@@ -25,13 +25,11 @@ Gem::Specification.new do |s|
   open_version = '>= 2.5.0'
   s.add_dependency 'open_core', open_version
 
-  s.add_development_dependency 'capybara', '~> 2.7'
+  s.add_development_dependency 'capybara', '~> 2.18.0'
   s.add_development_dependency 'capybara-screenshot'
-  s.add_development_dependency 'database_cleaner', '~> 1.5'
   s.add_development_dependency 'email_spec', '~> 2.1'
   s.add_development_dependency 'factory_bot', '~> 4.10.0'
   s.add_development_dependency 'ffaker'
-  s.add_development_dependency 'launchy'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec-rails', '~> 3.5'
