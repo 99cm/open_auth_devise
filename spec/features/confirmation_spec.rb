@@ -3,10 +3,8 @@ require 'spec_helper'
 RSpec.feature 'Confirmation', type: :feature, reload_user: true do
   before do
     set_confirmable_option(true)
-    Spree::UserMailer.stub(:confirmation_instructions).and_return(double(deliver: true))
+    allow(Spree::UserMailer).to receive(:confirmation_instructions).and_return(double(deliver: true))
   end
-
-  after(:each) { set_confirmable_option(false) }
 
   let!(:store) { create(:store) }
 
@@ -14,7 +12,7 @@ RSpec.feature 'Confirmation', type: :feature, reload_user: true do
     ActionMailer::Base.default_url_options[:host] = 'http://example.com'
   end
 
-  scenario 'create a new user' do
+  scenario 'create a new user', :js do
     visit spree.signup_path
 
     fill_in 'Email', with: 'email@person.com'

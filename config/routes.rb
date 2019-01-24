@@ -12,7 +12,8 @@ Spree::Core::Engine.routes.draw do
                      confirmations: 'spree/user_confirmations' }
       skip: [:unlocks, :omniauth_callbacks],
       path_names: { sign_out: 'logout' },
-      path: 'user' 
+      path_prefix: :user,
+      router_name: :spree
     }
 
     if Spree::Auth::Config[:omniauthable]
@@ -61,6 +62,7 @@ Spree::Core::Engine.routes.draw do
           sessions: 'spree/admin/user_sessions',
           passwords: 'spree/admin/user_passwords'
         },
+        router_name: :spree
       })
 
       devise_scope :spree_user do

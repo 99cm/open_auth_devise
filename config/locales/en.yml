@@ -2,7 +2,7 @@
 en:
   spree:
     admin_login: "Admin Login"
-    change_your_password: "Change your password"
+    change_my_password: "Change my password"
     store_credits:
       credit_balance: Store Credit Balance
   devise:
