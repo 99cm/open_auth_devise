@@ -3,7 +3,7 @@
 <div data-hook="account_summary" class="account-summary card bg-light mb-3">
   <dl id="user-info class="card-body">
     <dt><%= I18n.t('spree.email') %></dt>
-    <dd><%= @user.email %> (<%= link_to t('spree.edit'), spree.edit_account_path %>)</dd>
+    <dd><%= @user.email %> (<%= link_to I18n.t('spree.edit'), spree.edit_account_path %>)</dd>
     <br />
     <dt><%= I18n.t('spree.credit_balance, scope: [:store_credits])%></dt>
     <dd>

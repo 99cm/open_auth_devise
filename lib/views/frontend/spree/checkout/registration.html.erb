@@ -12,7 +12,7 @@
       <% end %>
       <%= form_for @order, url: update_checkout_registration_path, method: :put, html: { id: 'checkout_form_registration' } do |f| %>
         <div class="form-group">
-          <%= f.label :email, Spree.t(:email), class: 'required', title: 'required' %>
+          <%= f.label :email, I18n.t('spree.email'), class: 'required', title: 'required' %>
           <%= f.email_field :email, class: 'form-control title', placeholder: I18n.t('spree.email') %>
         </div>
         <div><%= f.submit I18n.t('spree.continue'), class: 'btn btn-lg btn-success btn-block' %></div>

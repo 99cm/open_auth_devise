@@ -7,7 +7,7 @@
     <div id="existing-customer" class="card-body" data-hook="login">
       <%= render partial: 'spree/shared/login' %>
       <div class="text-center">
-        <%= I18n.t('spree.or') %>&nbsp;<%= link_to I18n.t('spree.create_a_new_account'), spree.signup_path %> | <%= link_to t('spree.forgot_password'), spree.recover_password_path %>
+        <%= I18n.t('spree.or') %>&nbsp;<%= link_to I18n.t('spree.create_a_new_account'), spree.signup_path %> | <%= link_to I18n.t('spree.forgot_password'), spree.recover_password_path %>
       </div>
       <div data-hook="login_extras"></div>
     </div>

@@ -1,11 +1,9 @@
 RSpec.describe Spree::CheckoutController, type: :controller do
-  let(:order) { create(:order_with_totals, email: nil, user: nil, guest_token: token) }
+  let(:order) { create(:order_with_totals, email: nil, user: nil) }
   let(:user)  { build(:user, spree_api_key: 'fake') }
   let(:token) { 'some_token' }
-  let(:cookie_token) { token }
 
   before do
-    request.cookie_jar.signed[:guest_token] = cookie_token
     allow(controller).to receive(:current_order) { order }
     allow(order).to receive(:confirmation_required?) { true }
   end
@@ -87,10 +85,10 @@ RSpec.describe Spree::CheckoutController, type: :controller do
       end
 
       context 'with a token' do
-        before { allow(order).to receive(:guest_token) { 'ABC' } }
+        before { allow(order).to receive(:token) { 'ABC' } }
 
         it 'redirects to the tokenized order view' do
-          request.cookie_jar.signed[:guest_token] = 'ABC'
+          request.cookie_jar.signed[:token] = 'ABC'
           post :update, params: { state: 'confirm' }
           expect(response).to redirect_to spree.order_path(order)
           expect(flash.notice).to eq I18n.t('spree.order_processed_successfully')

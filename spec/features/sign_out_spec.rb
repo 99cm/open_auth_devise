@@ -31,18 +31,13 @@ RSpec.feature 'Sign Out', type: :feature, js: true do
     let!(:other_user) { create(:user) }
 
     it 'clears token cookies' do
-      visit spree.root_path
-
-      click_link 'RoR Mug'
-      click_button 'Add To Cart'
-
-      click_link 'Cart'
+      add_to_cart 'RoR Mug'
       expect(page).to have_text 'RoR Mug'
 
       click_link 'Logout'
 
       click_link 'Cart'
-      expect(page).to have_text Spree.t(:your_cart_is_empty)
+      expect(page).to have_text I18n.t('spree.your_cart_is_empty')
 
       visit spree.login_path
       fill_in 'Email', with: other_user.email
@@ -50,7 +45,7 @@ RSpec.feature 'Sign Out', type: :feature, js: true do
       click_button 'Login'
 
       click_link 'Cart'
-      expect(page).to have_text Spree.t(:your_cart_is_empty)
+      expect(page).to have_text I18n.t('spree.your_cart_is_empty')
     end
   end
 end
