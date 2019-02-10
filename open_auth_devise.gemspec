@@ -37,5 +37,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov', '~> 0.12'
   s.add_development_dependency 'open_backend', open_version
   s.add_development_dependency 'open_frontend', open_version
-  s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'sqlite3', '~> 1.3.6'
 end
