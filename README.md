@@ -1,7 +1,7 @@
 Open Auth (Devise)
 =====================
 
-Provides authentication services for Open, using the Devise gem, in addition, supports to configure omniauthable.
+Provides authentication services for [Open][1], using the Devise gem, in addition, supports to configure omniauthable.
 
 Installation
 ------------
@@ -96,3 +96,11 @@ You need to do a quick one-time creation of a test application and then you can 
 Then run the rspec tests.
 
     bundle exec rspec
+
+---
+
+Copyright (c) 2019 [Leo Wang][3] and other [contributors][2]. released under the [New BSD License][3]
+
+[1]: https://github.com/99cm/open
+[2]: https://github.com/99cm/open_auth_devise/graphs/contributors
+[3]: https://github.com/99cm/open_auth_device/blob/master/LICENSE.md
