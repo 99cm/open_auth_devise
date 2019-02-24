@@ -103,4 +103,4 @@ Copyright (c) 2019 [Leo Wang][3] and other [contributors][2]. released under the
 
 [1]: https://github.com/99cm/open
 [2]: https://github.com/99cm/open_auth_devise/graphs/contributors
-[3]: https://github.com/99cm/open_auth_device/blob/master/LICENSE.md
+[3]: https://github.com/99cm/open_auth_devise/blob/master/LICENSE.md
