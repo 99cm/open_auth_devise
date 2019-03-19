@@ -1,18 +1,18 @@
 <%= form_for Spree::User.new, as: :spree_user, url: spree.create_new_session_path do |f| %>
   <div id="password-credentials">
-    <div class="form-group">
+    <p>
       <%= f.label :email, I18n.t('spree.email') %>
-      <%= f.email_field :email, placeholder: "#{t('spree.email')}", class: 'form-control', tabindex: 1, autofocus: true %>
-    </div>
-    <div class="form-group">
+      <%= f.email_field :email, placeholder: "#{I18n.t('spree.email')}", class: 'form-control', tabindex: 1, autofocus: true %>
+    </p>
+    <p>
       <%= f.label :password, I18n.t('spree.password') %>
       <%= f.password_field :password, placeholder: "#{I18n.t('spree.password')}", class: 'form-control', tabindex: 2 %>
-    </div>
+    </p>
   </div>
-  <div class="form-check">
+  <p class="form-check">
     <%= f.check_box :remember_me, tabindex: 3, class: 'form-check-input' %>
-    <%= f.label :remember_me, I18n.t('spree.remember_me'), class: 'form-check-label %>
-  </div>
+    <%= f.label :remember_me, I18n.t('spree.remember_me'), class: 'form-check-label' %>
+  </p>
 
-  <div><%= f.submit I18n.t('spree.login'), class: 'btn btn-lg btn-success btn-block', tabindex: 4 %></div>
+  <p><%= f.submit I18n.t('spree.login'), class: 'btn btn-lg btn-success btn-block', tabindex: 4 %></p>
 <% end %>

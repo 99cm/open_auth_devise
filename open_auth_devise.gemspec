@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'devise', '~> 4.5.0'
   s.add_dependency 'devise-encryptable', '0.2.0'
 
-  open_version = '>= 2.5.0'
+  open_version = 'master'
   s.add_dependency 'open_core', open_version
 
   s.add_development_dependency 'capybara', '~> 2.18.0'
