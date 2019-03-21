@@ -7,10 +7,10 @@ Gem::Specification.new do |s|
   s.summary     = 'Provides authentication and authorization services for Open store with Devise and CanCan.'
   s.description = s.summary
 
-  s.required_ruby_version = '>= 2.5.1'
+  s.required_ruby_version = '>= 2.5.3'
 
-  s.author      = 'China Guide Tech Team'
-  s.email       = 'contact@china-guide.com'
+  s.author = 'Leo Wang'
+  s.homepage = 'https://github.com/99cm/open_auth_devise'
 
   s.license     = 'BSD-3-Clause'
 
@@ -19,8 +19,8 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'devise', '~> 4.5.0'
-  s.add_dependency 'devise-encryptable', '0.2.0'
+  s.add_dependency 'devise', '~> 4.6.1'
+  s.add_dependency 'devise-encryptable'
 
   open_version = 'master'
   s.add_dependency 'open_core', open_version
